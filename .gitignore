@@ -9,6 +9,8 @@ build/*
 *.perspectivev3
 xcuserdata
 
+xcuserdata
+
 # old school
 .svn
 
