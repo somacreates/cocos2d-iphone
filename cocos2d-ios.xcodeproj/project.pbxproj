@@ -12236,6 +12236,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -12254,6 +12255,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = cocos2d;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -12490,6 +12492,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = libpng;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -12502,6 +12505,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = libpng;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13035,6 +13039,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = FontLabel;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13047,6 +13052,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = FontLabel;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13627,6 +13633,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = TouchJSON;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13639,6 +13646,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = TouchJSON;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13656,6 +13664,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos Live";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13672,6 +13681,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "cocos Live";
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13835,6 +13845,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Chipmunk;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13857,6 +13868,7 @@
 				OTHER_CFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = Chipmunk;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14115,6 +14127,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14127,6 +14140,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14484,6 +14498,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = vorbis;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14497,6 +14512,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PREBINDING = NO;
 				PRODUCT_NAME = vorbis;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
