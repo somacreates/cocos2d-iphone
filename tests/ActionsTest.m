@@ -14,7 +14,6 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -386,13 +385,15 @@ Class restartAction()
 {
 	[super onEnter];
 	
-	[self centerSprites:2];
+	[self centerSprites:3];
 	
-	id action1 = [CCBlink actionWithDuration:2 blinks:10];
-	id action2 = [CCBlink actionWithDuration:2 blinks:5];
+	id action1 = [CCBlink actionWithDuration:3 blinks:10];
+	id action2 = [CCBlink actionWithDuration:3 blinks:5];
+	id action3 = [CCBlink actionWithDuration:0.5f blinks:5];
 	
 	[tamara runAction: action1];
 	[kathia runAction:action2];
+	[grossini runAction:action3];
 }
 -(NSString *) title
 {

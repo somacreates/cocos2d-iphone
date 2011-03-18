@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
-	
+
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -23,6 +23,8 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeOffsetAnchorRotation",
 	@"SpriteOffsetAnchorScale",
 	@"SpriteBatchNodeOffsetAnchorScale",
+	@"SpriteOffsetAnchorFlip",
+	@"SpriteBatchNodeOffsetAnchorFlip",
 	@"SpriteAnimationSplit",
 	@"SpriteColorOpacity",
 	@"SpriteBatchNodeColorOpacity",
@@ -676,7 +678,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"children %lx - atlasIndex:%d", (NSUInteger)child, currentIndex);
+			NSLog(@"children %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
 			prev = currentIndex;
 		}
 		
@@ -685,7 +687,7 @@ Class restartAction()
 		{
 			int currentIndex = [child atlasIndex];
 			NSAssert( prev == currentIndex-1, @"Child order failed");
-			NSLog(@"descendant %lx - atlasIndex:%d", (NSUInteger)child, currentIndex);
+			NSLog(@"descendant %x - atlasIndex:%d", (NSUInteger)child, currentIndex);
 			prev = currentIndex;
 		}		
 	}	
@@ -2132,6 +2134,174 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Example SpriteOffsetAnchorFlip
+
+@implementation SpriteOffsetAnchorFlip
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		for(int i=0;i<3;i++) {
+			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			
+			//
+			// Animation using Sprite batch
+			//
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+			
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:1];
+			
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+			
+			point.position = sprite.position;
+			
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+				
+				CCSpriteFrame *frame = [cache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithFrames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];			
+			
+			id flip = [CCFlipY actionWithFlipY:YES];
+			id flip_back = [CCFlipY actionWithFlipY:NO];
+			id delay = [CCDelayTime actionWithDuration:1];
+			id seq = [CCSequence actions:delay, flip, [[delay copy] autorelease], flip_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq]];
+			
+			[self addChild:sprite z:0];
+		}		
+	}	
+	return self;
+}
+
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite offset + anchor + flip";
+}
+
+-(NSString *) subtitle
+{
+	return @"issue #1078";
+}
+
+@end
+
+#pragma mark -
+#pragma mark Example SpriteBatchNodeOffsetAnchorFlip
+
+@implementation SpriteBatchNodeOffsetAnchorFlip
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];		
+		
+		for(int i=0;i<3;i++) {
+			CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+			[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+			[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFile:@"animations/grossini_gray.png"];
+			
+			//
+			// Animation using Sprite batch
+			//
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+			
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:200];
+			
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+			
+			point.position = sprite.position;
+			
+			CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+			[self addChild:spritebatch];
+			
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+				
+				CCSpriteFrame *frame = [cache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithFrames:animFrames];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:2.8f animation:animation restoreOriginalFrame:NO] ]];
+			
+			id flip = [CCFlipY actionWithFlipY:YES];
+			id flip_back = [CCFlipY actionWithFlipY:NO];
+			id delay = [CCDelayTime actionWithDuration:1];
+			id seq = [CCSequence actions:delay, flip, [[delay copy] autorelease], flip_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq]];
+			
+			[spritebatch addChild:sprite z:i];
+		}		
+	}	
+	return self;
+}
+
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode offset + anchor + flip";
+}
+
+-(NSString *) subtitle
+{
+	return @"issue #1078";
+}
+
+@end
 
 #pragma mark -
 #pragma mark Example Sprite: Animation Split

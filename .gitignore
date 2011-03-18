@@ -1,19 +1,17 @@
 # XCode noise
 PLBlocks.framework/*
-build/*
 *.pbxuser
 *.mode1v3
 *.pyc 
 *~.nib/ 
 *.perspective 
 *.perspectivev3
-xcuserdata
-
-xcuserdata
+xcuserdata/
+build/
 
 # old school
 .svn
 
 # osx noise
-.DS_store
+.DS_Store
 profile
