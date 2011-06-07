@@ -2,7 +2,7 @@ cocos2d for iPhone authors
 --------------------------
 
 Lead Developer:
-	Ricardo Quesada (http://www.sapusmedia.com)
+	Ricardo Quesada (http://www.zynga.com)
 
 Developers:
 	Valentin Milea
@@ -48,6 +48,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added support for GL sharegroup in EAGLView
 	* Brad Parks:
 		Web: Added google search on forum.
+	* Brian Chapados (http://chapados.org/)
+		Author of SkewTo, SkewBy actions
+		Added Skew support to CCNode and CCSprite
+		Added Skew tests cases to ActionsTest.
+		Added support for LineBreakMode in CCLabelTTF and CCTexture2D
 	* Brian Hammond:
 		patches for Demos
 	* Bryan/Acceleroto (http://www.acceleroto.com):
@@ -134,6 +139,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		EAGLView supports resizing. patch.
 	* Gildas (http://www.bigpapoo.com)
 		Fixed memory leak when loading ParticleDesigner particles.
+	* glimajr:
+		TextureCache: Prevents crash when adding a texture in multithreaded environments
 	* Graham Perks:
 		Atlas works with GL_CULL_FACE
 		FastDirector doesn't leak autorelease pool patch
@@ -294,7 +301,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		MenuToggleItem doesn't scale up if pressed several times. patch.
 	* marcofucci:
 		CCArray.fastRemoveObjectAtIndex patch.
-	* Marco Tillemans (araker):
+	* Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 		RenderTexture renders images with correct blend function. patch.
 		RenderTexture: performance fixes. Improved logic.
 		Added reorder node performance test
@@ -365,6 +372,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		CCSprite: correctly overrides setIsRelativeAnchorPoint
 		libpng doesn't compile pngtest.c. patch.
 		Templates: HelloWorld -> HelloWorldLayer and other improvements. patch.
+		TextureCache: Added dumpCachedTextureInfo method. Shows used RAM by cached textures
 	* pfg2009:
 		RenderTexture doesn't enable default GL states. patch.
 	* Piero Tofy (http://indieappsalliance.org):
@@ -373,8 +381,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Author of Gradient layer  
     * podhraski.tomislav:
         Mac Director compiles when slow FPS are selected. patch.
-	* psi.pk.ru:
-		EventDispatcher: flagsChanged is triggered correctly. patch
 	* psionic81:
 		ActionManager doesn't purge running actions patch
 	* rac5372:
@@ -403,6 +409,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		XCode only displays the libz dependency just once
 		added userData property in CocosNode
 		migrated all cocos2d code and all test to using the CC namespace
+		ccArray: added assert in realloc
 	* sakamoto.kazuki:
 		2d projection works OK with HighRes. patch.
 		Performance improvement in CCNode#insertChild. patch.
@@ -438,6 +445,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		patches for Transitions
 	* Stanislav Skuratov (trump-card):
 		Author of ParticleView, the particle editor
+	* Stepan Generalov (iPsi) (http://www.itraceur.ru/)
+		EventDispatcher: flagsChanged is triggered correctly. patch
+		Test case for issue 1071
 	* Steve Oldmeadow (http://www.smoco.com/):
 		Author and maintainer of CocosDenshion Sound Engine:
 			It includes patching, maintaing, porting it to Mac,
