@@ -1,3 +1,18 @@
+version 1.0-rc3 - 31-May-2011
+. [NEW] Actions: Added SkewTo and SkewBy actions
+. [NEW] LabelTTF: Added support for LineBreakMode. Mac only supports Word-Break.
+. [NEW] Node / Sprite: Added support for SkewX and SkewY properties
+. [NEW] Tests: Added skewX, skewY tests for sprites and actions. Added linebreak tests for LabelTTF.
+. [NEW] TextureCache: Added dumpCachedTextureInfo method. Shows the RAM used by the cached textures (issue #1154)
+. [FIX] cocosLive: Fixed memory leaks in NSURLConnection
+. [FIX] Sprites: DisplayedFrame returns the correct frame (issue #1182)
+. [FIX] Templates: Supports spaces in project name (issue #1158)
+. [FIX] TextureCache: Textures are autoreleased to prevent a crash in multi-threading environments
+. [FIX] TexturePVR: clean glError() before creating textures
+. [FIX] TMX Maps: Consume less memory (only what is needed), faster loading times (issue #1175)
+. [FIX-MAC] Tests: Added test case for issue #1071
+. [FIX-MAC] Director: Doesn't crash when entering fullscreen if window is not Key (issue #1185)
+
 version 1.0-rc2 - 03-May-2011
 . [NEW] CCArray: Added reduceMemoryFootprint and reverseObject (issue #1167)
 . [NEW] Director: Use small dt when the game is being debugged.
@@ -6,7 +21,7 @@ version 1.0-rc2 - 03-May-2011
 . [NEW] Tests: Added test case for bug 1159
 . [FIX] Particles: TTL is always >= 0.
 . [FIX] Particles: texture coordinates are being used correctly when texture is NPOT.
-. [FIX] Scheduler: Fixed possible crash when unscheduling a sibling
+. [FIX] Scheduler: Fixed possible crash when unscheduling a sibling (issue #1144)
 . [FIX] Templates: Use NS_BLOCK_ASSERTIONS and NDEBUG in Release Mode to remove asserts
 . [FIX] Templates: Xcode 3 templates fixed. Removed unused files in cocos2d lib. Added missing files from TouchJSON
 . [FIX] Templates: ARMv6 devices uses "none" autorotation to improve speed
