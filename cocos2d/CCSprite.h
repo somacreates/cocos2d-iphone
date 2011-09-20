@@ -29,6 +29,10 @@
 #import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 
+
+
+
+
 @class CCSpriteBatchNode;
 @class CCSpriteFrame;
 @class CCAnimation;
@@ -80,6 +84,8 @@ typedef enum {
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
+
+
 @interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
 {
 	
@@ -137,6 +143,8 @@ typedef enum {
 	// used internally.
 	void (*updateMethod)(id, SEL);
 }
+
+@property (nonatomic, assign) BOOL drawFunkyBlend;
 
 /** whether or not the Sprite needs to be updated in the Atlas */
 @property (nonatomic,readwrite) BOOL dirty;
