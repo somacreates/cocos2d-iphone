@@ -610,7 +610,7 @@ struct transformValues_ {
 
     if(self.drawFunkyBlend) {
         //NSLog(@"Drawn funky!");
-        glBlendFuncSeparate(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA, GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+        glBlendFuncSeparate(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
         //self.drawFunkyBlend = NO;
     }
     
