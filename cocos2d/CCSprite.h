@@ -144,8 +144,6 @@ typedef enum {
 	void (*updateMethod)(id, SEL);
 }
 
-@property (nonatomic, assign) BOOL drawFunkyBlend;
-
 /** whether or not the Sprite needs to be updated in the Atlas */
 @property (nonatomic,readwrite) BOOL dirty;
 /** the quad (tex coords, vertex coords and color) information */

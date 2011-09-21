@@ -76,7 +76,6 @@ struct transformValues_ {
 @synthesize batchNode = batchNode_;
 @synthesize honorParentTransform = honorParentTransform_;
 @synthesize offsetPositionInPixels = offsetPositionInPixels_;
-@synthesize drawFunkyBlend;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -607,13 +606,6 @@ struct transformValues_ {
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
 	if( newBlend )
 		glBlendFunc( blendFunc_.src, blendFunc_.dst );
-
-    if(self.drawFunkyBlend) {
-        //NSLog(@"Drawn funky!");
-        glBlendFuncSeparate(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-        //self.drawFunkyBlend = NO;
-    }
-    
 
     
 #define kQuadSize sizeof(quad_.bl)
