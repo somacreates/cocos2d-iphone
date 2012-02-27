@@ -215,7 +215,13 @@
 	}
 	
 	if (last_ == -1 && found==1)	{
-		[actions_[0] startWithTarget:target_];
+        NSLog(@"actions_[0] = %@", actions_[0]);
+        // So for our program we are running through the whole CCSequence
+        // when we want to start with target it looks like... What we can do is
+        // keep a ref around to the last CCSequence probably and then
+        // rather than jump through the whole recursive sequence just call
+        // start with target on that last CCSequence... 'last_' might be set wrong...
+		//[actions_[0] startWithTarget:target_]; // Looks like this is what slows us down a whole lot when we are wrapped in a CCSpeed with a speed < 0
 		[actions_[0] update:1.0f];
 		[actions_[0] stop];
 	}
