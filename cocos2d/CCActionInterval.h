@@ -73,6 +73,9 @@ Example:
 	CCFiniteTimeAction *actions_[2];
 	ccTime split_;
 	int last_;
+    CCSequence *rear_;
+    CCSequence *front_;
+    CCSequence *previous_;
 }
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;

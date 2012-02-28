@@ -129,6 +129,11 @@
 			break;
 	}
 	va_end(params);
+    
+//    if ([prev isKindOfClass:CCSequence.class]) {
+//        [(CCSequence*)prev setupPrevious:nil];
+//    }
+    
 	return prev;
 }
 
@@ -139,6 +144,10 @@
 	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
 	
+//    if ([prev isKindOfClass:CCSequence.class]) {
+//        [(CCSequence*)prev setupPrevious:nil];
+//    }
+    
 	return prev;
 }
 
@@ -164,7 +173,8 @@
 		actions_[0] = [one retain];
 		actions_[1] = [two retain];
 	}
-	
+	//NSLog(@"self: %@, one: %@, two: %@, rear: %@", self, one, two, [self rear]);
+    rear_ = [self rear];
 	return self;
 }
 
@@ -215,15 +225,30 @@
 	}
 	
 	if (last_ == -1 && found==1)	{
-        NSLog(@"actions_[0] = %@", actions_[0]);
+        //NSLog(@"heyo: %@", self);
+        //NSLog(@"actions_[0] = %@", actions_[0]);
         // So for our program we are running through the whole CCSequence
         // when we want to start with target it looks like... What we can do is
         // keep a ref around to the last CCSequence probably and then
         // rather than jump through the whole recursive sequence just call
-        // start with target on that last CCSequence... 'last_' might be set wrong...
-		//[actions_[0] startWithTarget:target_]; // Looks like this is what slows us down a whole lot when we are wrapped in a CCSpeed with a speed < 0
-		[actions_[0] update:1.0f];
+        // start with target on that last CCSequence... 'last_' might be set wrong
+        // when we do this.. investigate that first?
+        // We might also add some smarts to it where we have our startWithTarget
+        // check to see if it needs to be started again... 
+		[actions_[0] startWithTarget:target_]; // Looks like this is what slows us down a whole lot when we are wrapped in a CCSpeed with a speed < 0
+        // I wonder if we can jump the queue... If we knew what our current 
+        // So what's happening is that our master CCSequence finds its going
+        // backwards and then makes sure to reinitialize everything so that when
+        // it encounters it again it's not going to be messed up.
+        // I wonder why it has to reinitialize everything every time
+        // though.
+        // Hrrm... Can we clean up after ourselves if we continue on? Like if we
+        // are past an action, send it a 'prepare' or something so that when we
+        // encounter it again it is good to go.
+        //NSLog(@"actions_[0]: %@", actions_[0].class);
+        [actions_[0] update:1.0f];
 		[actions_[0] stop];
+        //NSLog(@"prev: %@ self: %@", previous_, self);
 	}
 
 	if (last_ != found ) {
@@ -235,11 +260,39 @@
 	}
 	[actions_[found] update: new_t];
 	last_ = found;
+    
+    //[previous_ prepare];
 }
+
+//-(void) prepare {
+//    [actions_[0] startWithTarget:target_];
+//    [actions_[1] startWithTarget:target_];
+//}
 
 - (CCActionInterval *) reverse
 {
 	return [[self class] actionOne: [actions_[1] reverse] two: [actions_[0] reverse ] ];
+}
+
+-(CCSequence *) rear {
+    if (!rear_) {
+        rear_ = ([actions_[0] isKindOfClass:CCSequence.class]
+                 ? [(CCSequence*)actions_[0] rear]
+                 : self);
+    }
+    
+    return rear_;
+}
+
+-(void) setupPrevious:(CCSequence*)previous {
+    previous_ = previous;
+    if ([actions_[0] isKindOfClass:CCSequence.class]) {
+        [(CCSequence*)actions_[0] setupPrevious:self];
+    }
+}
+
+-(CCSequence *) previous {
+    return previous_;
 }
 @end
 
