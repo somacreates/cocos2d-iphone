@@ -209,13 +209,19 @@ CGFloat	__ccContentScaleFactor = 1;
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-//			gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
-			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
 
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+                [[UIScreen mainScreen] scale] > 1.0 )
+            {
+                gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
+            } else {
+                gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
+            }
+            
 			glMatrixMode(GL_MODELVIEW);	
 			glLoadIdentity();
-			gluLookAt( size.width/2, size.height/2, zeye,
-					  size.width/2, size.height/2, 0,
+			gluLookAt( size.width/2, size.height/2 - (768 * 2), zeye,
+					  size.width/2, size.height/2 - (768 * 2), 0,
 					  0.0f, 1.0f, 0.0f);
 			break;
 		}
