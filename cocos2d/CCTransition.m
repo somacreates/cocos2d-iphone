@@ -865,7 +865,7 @@ const uint32_t kSceneFade = 0xFADEFADE;
 	
 	// create blend functions
 	
-	ccBlendFunc blend1 = {GL_ONE, GL_ONE}; // inScene_ will lay on background and will not be used with alpha
+	ccBlendFunc blend1 = {GL_ONE, GL_ZERO}; // inScene_ will lay on background and will not be used with alpha
 	ccBlendFunc blend2 = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}; // we are going to blend outScene_ via alpha 
 	
 	// set blendfunctions
