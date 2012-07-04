@@ -128,6 +128,12 @@ static 	SEL selUpdate = NULL;
  */
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
+    if ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)) {
+        NSString *pathWithoutExtension = [fileImage stringByDeletingPathExtension];
+        NSString *retinaName = [pathWithoutExtension stringByAppendingString:CC_RETINA_DISPLAY_FILENAME_SUFFIX];
+		retinaName = [retinaName stringByAppendingPathExtension:[fileImage pathExtension]];
+        fileImage = retinaName;
+    }
 	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
 	return [self initWithTexture:tex capacity:capacity];
 }
