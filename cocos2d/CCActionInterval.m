@@ -235,6 +235,7 @@
 {
 	return [[self class] actionOne: [actions_[1] reverse] two: [actions_[0] reverse ] ];
 }
+
 @end
 
 //
@@ -400,10 +401,15 @@
 		one_ = one;
 		two_ = two;
 
-		if( d1 > d2 )
-			two_ = [CCSequence actionOne:two two:[CCDelayTime actionWithDuration: (d1-d2)] ];
-		else if( d1 < d2)
-			one_ = [CCSequence actionOne:one two: [CCDelayTime actionWithDuration: (d2-d1)] ];
+		if( d1 > d2 ) {
+            //two_ = [CCSequence actionOne:two two:[CCDelayTime actionWithDuration: (d1-d2)] ];
+            two_ = [CCSequence actions:two, [CCDelayTime actionWithDuration: (d1-d2)], nil];
+        }
+			
+		else if( d1 < d2) {
+//			one_ = [CCSequence actionOne:one two: [CCDelayTime actionWithDuration: (d2-d1)] ];
+            one_ = [CCSequence actions:one, [CCDelayTime actionWithDuration: (d2-d1)], nil];
+        }
 		
 		[one_ retain];
 		[two_ retain];

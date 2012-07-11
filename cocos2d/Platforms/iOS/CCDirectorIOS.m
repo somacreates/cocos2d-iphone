@@ -120,7 +120,7 @@ CGFloat	__ccContentScaleFactor = 1;
 - (id) init
 {  
 	if( (self=[super init]) ) {
-				
+        
 		// portrait mode default
 		deviceOrientation_ = CCDeviceOrientationPortrait;
 		
@@ -171,7 +171,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	/* draw the notification node */
 	[notificationNode_ visit];
-
+    
 	if( displayFPS_ )
 		[self showFPS];
 	
@@ -184,7 +184,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	glPopMatrix();
 	
 	totalFrames_++;
-
+    
 	[openGLView_ swapBuffers];	
 }
 
@@ -205,18 +205,42 @@ CGFloat	__ccContentScaleFactor = 1;
 		case kCCDirectorProjection3D:
 		{
 			float zeye = [self getZEye];
-
+            
 			glViewport(0, 0, size.width, size.height);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-//			gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
-			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
-
+            //			gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
+            //			gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
+            
+            
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+                [[UIScreen mainScreen] scale] > 1.0 )
+            {
+                gluPerspective(60, (GLfloat)size.width/size.height, zeye-size.height/2, zeye+size.height/2 );
+            } else {
+                gluPerspective(60, (GLfloat)size.width/size.height, 0.5f, 1500);
+            }
+            
 			glMatrixMode(GL_MODELVIEW);	
 			glLoadIdentity();
-			gluLookAt( size.width/2, size.height/2, zeye,
-					  size.width/2, size.height/2, 0,
-					  0.0f, 1.0f, 0.0f);
+            
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+                [[UIScreen mainScreen] scale] > 1.0 )
+            {
+                gluLookAt( size.width/2, size.height/2 - (768 * 2), zeye,
+                          size.width/2, size.height/2 - (768 * 2), 0,
+                          0.0f, 1.0f, 0.0f);
+            } else {
+                gluLookAt( size.width/2, size.height/2, zeye,
+                          size.width/2, size.height/2, 0,
+                          0.0f, 1.0f, 0.0f);
+            }
+            
+            
+            
+            //			gluLookAt( size.width/2, size.height/2, zeye,
+            //					  size.width/2, size.height/2, 0,
+            //					  0.0f, 1.0f, 0.0f);
 			break;
 		}
 			
@@ -238,9 +262,9 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) setOpenGLView:(EAGLView *)view
 {
 	if( view != openGLView_ ) {
-
+        
 		[super setOpenGLView:view];
-
+        
 		// set size
 		winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 		
@@ -300,15 +324,15 @@ CGFloat	__ccContentScaleFactor = 1;
 	// Already disabled
 	if( ! enabled && __ccContentScaleFactor == 1 )
 		return YES;
-
+    
 	// setContentScaleFactor is not supported
 	if (! [openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
 		return NO;
-
+    
 	// SD device
 	if ([[UIScreen mainScreen] scale] == 1.0)
 		return NO;
-
+    
 	float newScale = enabled ? 2 : 1;
 	[self setContentScaleFactor:newScale];
 	
@@ -546,28 +570,28 @@ CGFloat	__ccContentScaleFactor = 1;
 		// XXX:
 		autoreleasePool = [NSAutoreleasePool new];
 	}
-
+    
 	return self;
 }
 
 - (void) startAnimation
 {
 	NSAssert( isRunning == NO, @"isRunning must be NO. Calling startAnimation twice?");
-
+    
 	// XXX:
 	// XXX: release autorelease objects created
 	// XXX: between "use fast director" and "runWithScene"
 	// XXX:
 	[autoreleasePool release];
 	autoreleasePool = nil;
-
+    
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 	
-
+    
 	isRunning = YES;
-
+    
 	SEL selector = @selector(mainLoop);
 	NSMethodSignature* sig = [[[CCDirector sharedDirector] class]
 							  instanceMethodSignatureForSelector:selector];
@@ -578,38 +602,38 @@ CGFloat	__ccContentScaleFactor = 1;
 	[invocation performSelectorOnMainThread:@selector(invokeWithTarget:)
 								 withObject:[CCDirector sharedDirector] waitUntilDone:NO];
 	
-//	NSInvocationOperation *loopOperation = [[[NSInvocationOperation alloc]
-//											 initWithTarget:self selector:@selector(mainLoop) object:nil]
-//											autorelease];
-//	
-//	[loopOperation performSelectorOnMainThread:@selector(start) withObject:nil
-//								 waitUntilDone:NO];
+    //	NSInvocationOperation *loopOperation = [[[NSInvocationOperation alloc]
+    //											 initWithTarget:self selector:@selector(mainLoop) object:nil]
+    //											autorelease];
+    //	
+    //	[loopOperation performSelectorOnMainThread:@selector(start) withObject:nil
+    //								 waitUntilDone:NO];
 }
 
 -(void) mainLoop
 {
 	while (isRunning) {
-	
+        
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
-
+        
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 #else
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 #endif
-
+        
 		if (isPaused_) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		}
 		
 		[self drawScene];		
-
+        
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 #else
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 #endif
-
+        
 		[loopPool release];
 	}	
 }
@@ -641,13 +665,13 @@ CGFloat	__ccContentScaleFactor = 1;
 - (void) startAnimation
 {
 	NSAssert( isRunning == NO, @"isRunning must be NO. Calling startAnimation twice?");
-
+    
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: ThreadedFastDirector: Error on gettimeofday");
 	}
-
+    
 	isRunning = YES;
-
+    
 	NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
 	[thread start];
 	[thread release];
@@ -658,11 +682,11 @@ CGFloat	__ccContentScaleFactor = 1;
 	while( ![[NSThread currentThread] isCancelled] ) {
 		if( isRunning )
 			[self performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-				
+        
 		if (isPaused_) {
 			usleep(250000); // Sleep for a quarter of a second (250,000 microseconds) so that the framerate is 4 fps.
 		} else {
-//			usleep(2000);
+            //			usleep(2000);
 		}
 	}	
 }
@@ -703,7 +727,7 @@ CGFloat	__ccContentScaleFactor = 1;
 - (void) startAnimation
 {
 	NSAssert( displayLink == nil, @"displayLink must be nil. Calling startAnimation twice?");
-
+    
 	if ( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: DisplayLinkDirector: Error on gettimeofday");
 	}
@@ -713,7 +737,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	int frameInterval = (int) floor(animationInterval_ * 60.0f);
 	
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
-
+    
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
