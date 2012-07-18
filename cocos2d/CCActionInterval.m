@@ -1351,10 +1351,8 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 		// new t for animations
 		t = fmodf(t, 1.0f);
-	} // I think that we need to fix this so that we can have our animations go backwards.
-	
-//	NSArray *frames = [animation_ frames];
-//	NSUInteger numberOfFrames = [frames count];
+	} 
+    
 	CCSpriteFrame *frameToDisplay = nil;
 
 	for( NSUInteger i=nextFrame_; i < numberOfFrames; i++ ) {
@@ -1369,31 +1367,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 			if( dict )
 				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
 
-			//nextFrame_ = i+1;
-
 			break;
 		}
 	}	
-    
-    
-    // The below code works in our game for displaying animations when wrapped
-    // in a CCSpeed and going backwards. The above code does not... So lets
-    // fix it.
-//    NSArray *frames = [animation_ frames];
-//	NSUInteger numberOfFrames = [frames count];
-//    
-//	NSUInteger idx = t * numberOfFrames;
-//    
-//	if( idx >= numberOfFrames )
-//		idx = numberOfFrames -1;
-//    
-//	CCSprite *sprite = target_;
-//    CCSpriteFrame *frameToDisplay = nil;
-//    CCAnimationFrame *frame = [frames objectAtIndex:idx];
-//    frameToDisplay = [frame spriteFrame];
-//    
-//	//if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
-//		[sprite setDisplayFrame: frameToDisplay];
 }
 
 - (CCActionInterval *) reverse
