@@ -1330,42 +1330,58 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 -(void) update: (ccTime) t
 {
 	
-	// if t==1, ignore. Animation should finish with t==1
-	if( t < 1.0f ) {
-		t *= animation_.loops;
-		
-		// new loop?  If so, reset frame counter
-		NSUInteger loopNumber = (NSUInteger)t;
-		if( loopNumber > executedLoops_ ) {
-			nextFrame_ = 0;
-			executedLoops_++;
-		}
-		
-		// new t for animations
-		t = fmodf(t, 1.0f);
-	}
-	
-	NSArray *frames = [animation_ frames];
+//	// if t==1, ignore. Animation should finish with t==1
+//	if( t < 1.0f ) {
+//		t *= animation_.loops;
+//		
+//		// new loop?  If so, reset frame counter
+//		NSUInteger loopNumber = (NSUInteger)t;
+//		if( loopNumber > executedLoops_ ) {
+//			nextFrame_ = 0;
+//			executedLoops_++;
+//		}
+//
+//		// new t for animations
+//		t = fmodf(t, 1.0f);
+//	} // I think that we need to fix this so that we can have our animations go backwards.
+//	
+//	NSArray *frames = [animation_ frames];
+//	NSUInteger numberOfFrames = [frames count];
+//	CCSpriteFrame *frameToDisplay = nil;
+//
+//	for( NSUInteger i=nextFrame_; i < numberOfFrames; i++ ) {
+//		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
+//
+//		if( [splitTime floatValue] <= t ) {
+//			CCAnimationFrame *frame = [frames objectAtIndex:i];
+//			frameToDisplay = [frame spriteFrame];
+//			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
+//			
+//			NSDictionary *dict = [frame userInfo];
+//			if( dict )
+//				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
+//
+//			nextFrame_ = i+1;
+//
+//			break;
+//		}
+//	}	
+    
+    NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
-	CCSpriteFrame *frameToDisplay = nil;
-
-	for( NSUInteger i=nextFrame_; i < numberOfFrames; i++ ) {
-		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
-
-		if( [splitTime floatValue] <= t ) {
-			CCAnimationFrame *frame = [frames objectAtIndex:i];
-			frameToDisplay = [frame spriteFrame];
-			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
-			
-			NSDictionary *dict = [frame userInfo];
-			if( dict )
-				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
-
-			nextFrame_ = i+1;
-
-			break;
-		}
-	}	
+    
+	NSUInteger idx = t * numberOfFrames;
+    
+	if( idx >= numberOfFrames )
+		idx = numberOfFrames -1;
+    
+	CCSprite *sprite = target_;
+    CCSpriteFrame *frameToDisplay = nil;
+    CCAnimationFrame *frame = [frames objectAtIndex:idx];
+    frameToDisplay = [frame spriteFrame];
+    
+	//if (! [sprite isFrameDisplayed: [frames objectAtIndex: idx]] )
+		[sprite setDisplayFrame: frameToDisplay];
 }
 
 - (CCActionInterval *) reverse
