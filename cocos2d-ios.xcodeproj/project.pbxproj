@@ -13088,6 +13088,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "cocos2d-mac";
 				SDKROOT = macosx10.7;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13113,6 +13114,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "cocos2d-mac";
 				SDKROOT = macosx10.7;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13128,6 +13130,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = "kazmath-mac";
 				SDKROOT = macosx10.7;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13141,6 +13144,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = "kazmath-mac";
 				SDKROOT = macosx10.7;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -13342,6 +13346,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -13365,6 +13370,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14464,6 +14470,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
 				PRODUCT_NAME = Chipmunk;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14481,6 +14488,7 @@
 				HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Chipmunk;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14644,6 +14652,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14655,6 +14664,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14853,6 +14863,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = kazmath;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14865,6 +14876,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = kazmath;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
